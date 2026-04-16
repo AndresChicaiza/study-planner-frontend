@@ -8,6 +8,7 @@ import Activities from "./pages/Activities"
 import Conflicts from "./pages/Conflicts"
 import Login from "./pages/Login"
 import Analytics from "./pages/Analytics"
+import Settings from "./pages/Settings"
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                 <Route path="activities" element={<Activities />} />
                 <Route path="conflicts" element={<Conflicts />} />
                 <Route path="analytics" element={<Analytics />} />
+                <Route path="settings" element={<Settings />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" />} />

@@ -7,6 +7,7 @@ const links = [
     { to: "/app/activities", label: "Actividades" },
     { to: "/app/conflicts", label: "Conflictos" },
     { to: "/app/analytics", label: "Analytics" },
+    { to: "/app/settings", label: "Configuración" },
 ]
 
 export default function Sidebar() {
@@ -31,7 +32,6 @@ export default function Sidebar() {
 
     return (
         <>
-            {/* Botón hamburguesa — solo visible en móvil */}
             <button
                 onClick={() => setOpen(true)}
                 className="md:hidden fixed top-4 left-4 z-50 bg-slate-800 p-2 rounded-lg text-white border border-slate-700"
@@ -42,7 +42,6 @@ export default function Sidebar() {
                 </svg>
             </button>
 
-            {/* Overlay — solo en móvil cuando está abierto */}
             {open && (
                 <div
                     className="md:hidden fixed inset-0 bg-black/50 z-40"
@@ -50,7 +49,6 @@ export default function Sidebar() {
                 />
             )}
 
-            {/* Sidebar */}
             <aside
                 className={`
                     fixed md:static inset-y-0 left-0 z-50
@@ -62,7 +60,6 @@ export default function Sidebar() {
             >
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-bold text-indigo-400">Planner</h1>
-                    {/* Botón cerrar — solo en móvil */}
                     <button
                         onClick={() => setOpen(false)}
                         className="md:hidden text-slate-400 hover:text-white transition"
