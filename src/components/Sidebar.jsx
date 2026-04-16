@@ -6,7 +6,7 @@ const links = [
     { to: "/app/today", label: "Hoy" },
     { to: "/app/activities", label: "Actividades" },
     { to: "/app/conflicts", label: "Conflictos" },
-    { to: "/app/analytics", label: "Analytics" },
+    { to: "/app/analytics", label: "Analisis" },
     { to: "/app/settings", label: "Configuración" },
 ]
 
