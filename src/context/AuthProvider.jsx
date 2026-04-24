@@ -8,20 +8,29 @@ export default function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        // Al cargar, verificar si hay sesión activa y renovarla automáticamente
         supabase.auth.getSession().then(({ data: { session } }) => {
             if (session) {
                 setUser(session.user)
                 localStorage.setItem("token", session.access_token)
+            } else {
+                setUser(null)
+                localStorage.removeItem("token")
             }
             setLoading(false)
         })
 
+        // Escuchar cambios de sesión — renueva el token automáticamente
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            (_event, session) => {
-                if (session) {
+            async (event, session) => {
+                if (event === "TOKEN_REFRESHED" && session) {
+                    // Token renovado automáticamente por Supabase
                     setUser(session.user)
                     localStorage.setItem("token", session.access_token)
-                } else {
+                } else if (event === "SIGNED_IN" && session) {
+                    setUser(session.user)
+                    localStorage.setItem("token", session.access_token)
+                } else if (event === "SIGNED_OUT") {
                     setUser(null)
                     localStorage.removeItem("token")
                 }
