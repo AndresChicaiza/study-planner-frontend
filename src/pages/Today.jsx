@@ -37,11 +37,10 @@ export default function Today() {
         loadToday()
     }
 
-    // C4 — estado de carga
     if (loading) {
         return (
             <div className="space-y-4">
-                <h1 className="text-3xl font-bold text-white">Plan de Hoy</h1>
+                <h1 className="text-3xl font-bold text-white text-center">Plan de Hoy</h1>
                 <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl animate-pulse">
                     <div className="h-4 bg-slate-700 rounded w-1/3 mb-3" />
                     <div className="h-3 bg-slate-800 rounded w-1/2" />
@@ -50,16 +49,17 @@ export default function Today() {
         )
     }
 
-    // C4 — estado de error con acción clara
     if (error) {
         return (
             <div className="space-y-4">
-                <h1 className="text-3xl font-bold text-white">Plan de Hoy</h1>
-                <div className="bg-red-900/30 border border-red-500 p-5 rounded-xl text-red-300 space-y-3">
+                <h1 className="text-3xl font-bold text-white text-center">Plan de Hoy</h1>
+                <div className="bg-red-900/30 border border-red-500 p-5 rounded-xl text-red-300 space-y-3" role="alert">
                     <p className="font-bold">No se pudo cargar tu plan</p>
-                    <p className="text-sm opacity-80">Revisa tu conexión e inténtalo de nuevo.</p>
-                    <button onClick={loadToday}
-                        className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl text-white text-sm transition">
+                    <p className="text-sm">Revisa tu conexión e inténtalo de nuevo.</p>
+                    <button
+                        onClick={loadToday}
+                        className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl text-white text-sm transition focus:outline-none focus:ring-2 focus:ring-red-400"
+                    >
                         Reintentar
                     </button>
                 </div>
@@ -78,63 +78,75 @@ export default function Today() {
 
     return (
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold text-white">Plan de Hoy</h1>
+            <h1 className="text-3xl font-bold text-white text-center">Plan de Hoy</h1>
 
-            {/* C3 — Regla visible y consistente */}
-            <div className="bg-slate-900 border border-slate-700 p-4 rounded-xl space-y-2">
-                <p className="text-sm font-medium text-slate-300">¿Cómo se organiza tu plan?</p>
-                <div className="grid grid-cols-3 gap-3 text-xs text-slate-400">
+            {/* Regla visible — texto más grande y mejor contraste (WCAG AA) */}
+            <div className="bg-slate-900 border border-slate-700 p-5 rounded-xl space-y-3">
+                <p className="text-base font-semibold text-slate-200">¿Cómo se organiza tu plan?</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div className="flex items-start gap-2">
-                        <span className="text-red-400 font-bold mt-0.5">●</span>
-                        <span><span className="text-red-400 font-medium">Vencidas</span> — fecha anterior a hoy, pendientes. Puedes reprogramarlas.</span>
+                        <span className="text-red-400 font-bold mt-0.5 text-lg" aria-hidden="true">●</span>
+                        <span className="text-sm text-slate-200">
+                            <span className="text-red-400 font-semibold">Vencidas</span> — fecha anterior a hoy, pendientes. Puedes reprogramarlas.
+                        </span>
                     </div>
                     <div className="flex items-start gap-2">
-                        <span className="text-yellow-400 font-bold mt-0.5">●</span>
-                        <span><span className="text-yellow-400 font-medium">Hoy</span> — programadas para hoy, pendientes o pospuestas</span>
+                        <span className="text-yellow-300 font-bold mt-0.5 text-lg" aria-hidden="true">●</span>
+                        <span className="text-sm text-slate-200">
+                            <span className="text-yellow-300 font-semibold">Hoy</span> — programadas para hoy, pendientes o pospuestas
+                        </span>
                     </div>
                     <div className="flex items-start gap-2">
-                        <span className="text-indigo-400 font-bold mt-0.5">●</span>
-                        <span><span className="text-indigo-400 font-medium">Próximas</span> — fechas futuras, pendientes</span>
+                        <span className="text-indigo-400 font-bold mt-0.5 text-lg" aria-hidden="true">●</span>
+                        <span className="text-sm text-slate-200">
+                            <span className="text-indigo-400 font-semibold">Próximas</span> — fechas futuras, pendientes
+                        </span>
                     </div>
                 </div>
-                <p className="text-xs text-slate-500 pt-1">
-                    Las subtareas completadas no aparecen aquí. Sobrecarga cuando horas del día superan tu límite ({data?.daily_limit || 6}h).{" "}
-                    <a href="/app/settings" className="text-indigo-400 hover:underline">Cambiar límite →</a>
+                <p className="text-sm text-slate-300">
+                    Las subtareas completadas no aparecen aquí. Sobrecarga cuando las horas del día superan tu límite ({data?.daily_limit || 6}h).{" "}
+                    <a href="/app/settings" className="text-indigo-400 hover:underline focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded">
+                        Cambiar límite →
+                    </a>
                 </p>
             </div>
 
-            {/* C3 + C4 — Alerta de sobrecarga con números claros */}
+            {/* Alerta de sobrecarga */}
             {data?.overload && (
-                <div className="bg-red-900/30 border border-red-500 p-5 rounded-xl text-red-300 space-y-2">
-                    <p className="font-bold">⚠️ Sobrecarga detectada hoy</p>
-                    <p className="text-sm opacity-80">
-                        Tienes <span className="font-bold">{totalHoy}h</span> programadas y tu límite es <span className="font-bold">{data?.daily_limit || 6}h</span>.
-                        Ve a <a href="/app/conflicts" className="underline hover:text-red-200">Conflictos</a> para redistribuir automáticamente.
+                <div
+                    className="bg-red-900/30 border border-red-400 p-5 rounded-xl text-red-200 space-y-2"
+                    role="alert"
+                    aria-live="polite"
+                >
+                    <p className="font-bold text-base">⚠️ Sobrecarga detectada hoy</p>
+                    <p className="text-sm">
+                        Tienes <strong>{totalHoy}h</strong> programadas y tu límite es <strong>{data?.daily_limit || 6}h</strong>.
+                        Ve a{" "}
+                        <a href="/app/conflicts" className="underline hover:text-red-100 focus:outline-none focus:ring-1 focus:ring-red-300 rounded">
+                            Conflictos
+                        </a>{" "}
+                        para redistribuir automáticamente.
                     </p>
                 </div>
             )}
 
             {/* Resumen horas */}
-            <div className="bg-indigo-900/30 border border-indigo-500 p-5 rounded-xl text-indigo-300">
-                <p className="text-sm opacity-70">Horas pendientes hoy</p>
+            <div className="bg-indigo-900/30 border border-indigo-400 p-5 rounded-xl text-indigo-200">
+                <p className="text-sm font-medium">Horas pendientes hoy</p>
                 <p className="text-4xl font-bold">{totalHoy}h</p>
-                {/* C3 — Consistencia: progreso global */}
-                {data?.total_completed !== undefined && (
-                    <p className="text-xs opacity-60 mt-1">
-                        {data.total_completed} subtarea(s) completadas en total hoy
-                    </p>
-                )}
             </div>
 
-            {/* C4 — Estado vacío orientado a acción */}
+            {/* Estado vacío */}
             {!haySubtareas && (
                 <div className="bg-slate-900 border border-slate-700 p-6 rounded-xl text-center space-y-2">
                     <p className="font-bold text-white text-lg">¡Sin pendientes por ahora!</p>
-                    <p className="text-sm text-slate-400">
+                    <p className="text-sm text-slate-300">
                         No tienes subtareas pendientes para hoy ni días anteriores.
                     </p>
-                    <a href="/app/activities"
-                        className="inline-block mt-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-xl transition">
+                    <a
+                        href="/app/activities"
+                        className="inline-block mt-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-xl transition focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    >
                         Ir a Actividades →
                     </a>
                 </div>
@@ -143,15 +155,14 @@ export default function Today() {
             {/* Secciones */}
             {haySubtareas && (
                 <div className="grid md:grid-cols-3 gap-5">
-
                     {/* Vencidas con reprogramar */}
-                    <div className="p-5 rounded-xl border border-red-500 bg-red-900/20">
-                        <h2 className="font-bold text-lg mb-3 text-red-300">
+                    <div className="p-5 rounded-xl border border-red-400 bg-red-900/20" role="region" aria-label="Tareas vencidas">
+                        <h2 className="font-bold text-lg mb-3 text-red-200">
                             🔴 Vencidas
-                            <span className="ml-2 text-sm font-normal opacity-60">({data?.vencidas?.length || 0})</span>
+                            <span className="ml-2 text-sm font-normal opacity-70">({data?.vencidas?.length || 0})</span>
                         </h2>
                         {!data?.vencidas?.length ? (
-                            <p className="text-sm text-red-400 opacity-50 italic">Sin tareas vencidas ✓</p>
+                            <p className="text-sm text-red-300 opacity-70 italic">Sin tareas vencidas ✓</p>
                         ) : (
                             <div className="space-y-3">
                                 {data.vencidas.map(s => (
@@ -159,23 +170,39 @@ export default function Today() {
                                         <div className="flex justify-between">
                                             <div>
                                                 <p className="font-bold text-white">{s.title}</p>
-                                                <p className="text-xs text-red-400">Vencía: {s.date}</p>
+                                                <p className="text-xs text-red-300">Vencía: {s.date}</p>
                                             </div>
-                                            <span className="font-bold text-red-300">{s.hours}h</span>
+                                            <span className="font-bold text-red-200">{s.hours}h</span>
                                         </div>
                                         {rescheduling[s.id] ? (
                                             <div className="flex gap-2">
-                                                <input type="date" value={newDate[s.id] || ""}
+                                                <input
+                                                    type="date"
+                                                    value={newDate[s.id] || ""}
                                                     onChange={(e) => setNewDate({ ...newDate, [s.id]: e.target.value })}
-                                                    className="bg-slate-700 text-white p-1.5 rounded-lg text-xs border border-slate-600 focus:outline-none focus:border-indigo-500 flex-1" />
-                                                <button onClick={() => reschedule(s.id)}
-                                                    className="bg-indigo-600 hover:bg-indigo-700 px-2 py-1 rounded-lg text-white text-xs transition">OK</button>
-                                                <button onClick={() => setRescheduling({ ...rescheduling, [s.id]: false })}
-                                                    className="bg-slate-600 hover:bg-slate-500 px-2 py-1 rounded-lg text-white text-xs transition">✕</button>
+                                                    aria-label="Nueva fecha para reprogramar"
+                                                    className="bg-slate-700 text-white p-1.5 rounded-lg text-xs border border-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 flex-1"
+                                                />
+                                                <button
+                                                    onClick={() => reschedule(s.id)}
+                                                    className="bg-indigo-600 hover:bg-indigo-700 px-2 py-1 rounded-lg text-white text-xs transition focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                                                    aria-label="Confirmar reprogramación"
+                                                >
+                                                    OK
+                                                </button>
+                                                <button
+                                                    onClick={() => setRescheduling({ ...rescheduling, [s.id]: false })}
+                                                    className="bg-slate-600 hover:bg-slate-500 px-2 py-1 rounded-lg text-white text-xs transition focus:outline-none focus:ring-2 focus:ring-slate-400"
+                                                    aria-label="Cancelar reprogramación"
+                                                >
+                                                    ✕
+                                                </button>
                                             </div>
                                         ) : (
-                                            <button onClick={() => setRescheduling({ ...rescheduling, [s.id]: true })}
-                                                className="text-xs text-indigo-400 hover:text-indigo-300 transition">
+                                            <button
+                                                onClick={() => setRescheduling({ ...rescheduling, [s.id]: true })}
+                                                className="text-sm text-indigo-400 hover:text-indigo-300 transition focus:outline-none focus:ring-1 focus:ring-indigo-400 rounded"
+                                            >
                                                 Reprogramar →
                                             </button>
                                         )}
@@ -188,15 +215,17 @@ export default function Today() {
                     <TodaySection
                         title="🟡 Hoy"
                         items={data?.hoy}
-                        color="border-yellow-500 bg-yellow-900/20 text-yellow-300"
+                        color="border-yellow-400 bg-yellow-900/20 text-yellow-200"
                         emptyMessage="Sin tareas para hoy ✓"
+                        ariaLabel="Tareas de hoy"
                     />
 
                     <TodaySection
                         title="🔵 Próximas"
                         items={data?.proximas}
-                        color="border-indigo-500 bg-indigo-900/20 text-indigo-300"
+                        color="border-indigo-400 bg-indigo-900/20 text-indigo-200"
                         emptyMessage="Sin tareas próximas"
+                        ariaLabel="Tareas próximas"
                     />
                 </div>
             )}

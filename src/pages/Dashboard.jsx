@@ -31,7 +31,7 @@ export default function Dashboard() {
             <div className="space-y-6">
                 <h1 className="text-3xl font-bold text-white">Dashboard</h1>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {[1,2,3,4].map(i => (
+                    {[1, 2, 3, 4].map(i => (
                         <div key={i} className="bg-slate-900 border border-slate-800 p-4 rounded-xl animate-pulse">
                             <div className="h-3 bg-slate-700 rounded w-2/3 mb-2" />
                             <div className="h-7 bg-slate-800 rounded w-1/2" />
@@ -118,8 +118,8 @@ export default function Dashboard() {
                             {/* C4 — microcopy de estado */}
                             <p className="text-xs text-slate-500">
                                 {a.progress === 100 ? "Completada ✓" :
-                                 a.progress === 0 ? "Sin iniciar" :
-                                 "En progreso"}
+                                    a.progress === 0 ? "Sin iniciar" :
+                                        "En progreso"}
                             </p>
                         </div>
                     </div>
