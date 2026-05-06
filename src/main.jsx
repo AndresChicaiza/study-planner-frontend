@@ -10,6 +10,11 @@ import "./index.css"
 ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
         <AuthProvider>
+            {/* WCAG 2.2 — Skip link para navegación por teclado */}
+            <a href="#main-content" className="skip-link">
+                Saltar al contenido principal
+            </a>
+
             <Toaster
                 position="top-right"
                 toastOptions={{

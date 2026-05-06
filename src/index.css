@@ -2,7 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =============================================
+   WCAG 2.2 — Base accesible
+   ============================================= */
+
 body {
   background: #020617;
+  color: #f1f5f9;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* WCAG 2.2 — Focus visible (navegación por teclado) */
+:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Remover outline solo cuando se usa ratón */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* WCAG 2.2 — Tamaño mínimo de área de clic (24x24px) */
+button,
+a,
+input,
+select,
+textarea {
+  min-height: 24px;
+}
+
+/* WCAG 2.2 — Alto contraste para texto secundario */
+.text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+.text-slate-500 {
+  color: #7a8fa6 !important;
+}
+
+/* =============================================
+   Paleta accesible para daltonismo
+   Evita depender solo de rojo/verde
+   ============================================= */
+
+/* Estado completado — azul + verde (distinguible para deuteranopia) */
+.status-completed {
+  background-color: rgba(16, 185, 129, 0.15);
+  border-color: #059669;
+}
+
+/* Estado vencido — naranja (distinguible de verde para daltónicos) */
+.status-overdue {
+  background-color: rgba(234, 88, 12, 0.15);
+  border-color: #ea580c;
+}
+
+/* Estado pospuesto — amarillo intenso con borde */
+.status-postponed {
+  background-color: rgba(202, 138, 4, 0.15);
+  border-color: #ca8a04;
+}
+
+/* =============================================
+   Animaciones reducidas (WCAG 2.3)
+   ============================================= */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =============================================
+   Skip link accesibilidad
+   ============================================= */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #4f46e5;
   color: white;
+  padding: 8px 16px;
+  z-index: 9999;
+  border-radius: 0 0 8px 0;
+  font-weight: bold;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
 }

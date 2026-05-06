@@ -7,6 +7,7 @@ import Today from "./pages/Today"
 import Activities from "./pages/Activities"
 import Conflicts from "./pages/Conflicts"
 import Login from "./pages/Login"
+import Register from "./pages/Register"
 import Analytics from "./pages/Analytics"
 import Settings from "./pages/Settings"
 
@@ -14,6 +15,7 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
             <Route
                 path="/app"
