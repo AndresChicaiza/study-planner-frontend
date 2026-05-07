@@ -20,50 +20,75 @@ body {
   border-radius: 6px;
 }
 
-/* Remover outline solo cuando se usa ratón */
 :focus:not(:focus-visible) {
   outline: none;
 }
 
-/* WCAG 2.2 — Tamaño mínimo de área de clic (24x24px) */
-button,
-a,
-input,
-select,
-textarea {
-  min-height: 24px;
-}
-
-/* WCAG 2.2 — Alto contraste para texto secundario */
-.text-slate-400 {
-  color: #94a3b8 !important;
-}
-
-.text-slate-500 {
-  color: #7a8fa6 !important;
-}
-
 /* =============================================
-   Paleta accesible para daltonismo
-   Evita depender solo de rojo/verde
+   WCAG 2.2 — Paleta para daltonismo
+   Activada con clase .colorblind-mode en body
+   Reemplaza rojo/verde por azul/naranja/morado
+   distinguibles para deuteranopía y protanopía
    ============================================= */
 
-/* Estado completado — azul + verde (distinguible para deuteranopia) */
-.status-completed {
-  background-color: rgba(16, 185, 129, 0.15);
-  border-color: #059669;
+/* Progreso completado: verde → azul */
+body.colorblind-mode .bg-green-500,
+body.colorblind-mode .bg-green-400 {
+  background-color: #3b82f6 !important;
 }
 
-/* Estado vencido — naranja (distinguible de verde para daltónicos) */
-.status-overdue {
-  background-color: rgba(234, 88, 12, 0.15);
-  border-color: #ea580c;
+/* Progreso vencido: rojo → naranja */
+body.colorblind-mode .bg-red-500,
+body.colorblind-mode .bg-red-400 {
+  background-color: #f97316 !important;
 }
 
-/* Estado pospuesto — amarillo intenso con borde */
-.status-postponed {
-  background-color: rgba(202, 138, 4, 0.15);
-  border-color: #ca8a04;
+/* Progreso en riesgo: amarillo → morado */
+body.colorblind-mode .bg-yellow-500,
+body.colorblind-mode .bg-yellow-400 {
+  background-color: #a855f7 !important;
+}
+
+/* Texto de estado vencido */
+body.colorblind-mode .text-red-400,
+body.colorblind-mode .text-red-300 {
+  color: #fb923c !important;
+}
+
+/* Texto de estado completado */
+body.colorblind-mode .text-green-400,
+body.colorblind-mode .text-green-300 {
+  color: #60a5fa !important;
+}
+
+/* Bordes de tarjetas vencidas */
+body.colorblind-mode .border-red-500,
+body.colorblind-mode .border-red-400 {
+  border-color: #f97316 !important;
+}
+
+/* Fondos de tarjetas vencidas */
+body.colorblind-mode .bg-red-900\/20,
+body.colorblind-mode .bg-red-900\/30 {
+  background-color: rgba(249, 115, 22, 0.15) !important;
+}
+
+/* Fondos de tarjetas completadas */
+body.colorblind-mode .bg-green-900\/20,
+body.colorblind-mode .bg-green-900\/30 {
+  background-color: rgba(59, 130, 246, 0.15) !important;
+}
+
+/* Bordes completadas */
+body.colorblind-mode .border-green-700,
+body.colorblind-mode .border-green-500 {
+  border-color: #3b82f6 !important;
+}
+
+/* Texto amarillo pospuesto → morado */
+body.colorblind-mode .text-yellow-400,
+body.colorblind-mode .text-yellow-300 {
+  color: #c084fc !important;
 }
 
 /* =============================================
@@ -93,6 +118,7 @@ textarea {
   border-radius: 0 0 8px 0;
   font-weight: bold;
   transition: top 0.2s;
+  text-decoration: none;
 }
 
 .skip-link:focus {
